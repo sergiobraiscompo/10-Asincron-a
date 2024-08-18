@@ -1,0 +1,30 @@
+body {
+    background-color: whitesmoke;
+}
+
+.cabecera {
+    background-color: gray;
+}
+
+
+.listado-personajes {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 1rem;
+}
+
+.personaje-contenedor {
+    background-color: rgb(0, 255, 149);
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+}
+
+.personaje-contenedor img {
+    width: 100%;
+    justify-self: center;
+}
+
+.campo-personaje {
+    font-weight: bolder;
+}
