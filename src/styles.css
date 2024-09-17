@@ -4,27 +4,36 @@ body {
 
 .cabecera {
     background-color: gray;
+    width: 100%;
 }
 
+.cabecera h1 {
+    text-align: center;
+}
 
 .listado-personajes {
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    gap: 1rem;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    column-gap: 5%;
+    row-gap: 2%;
+    margin: 0 10%;
 }
 
 .personaje-contenedor {
     background-color: rgb(0, 255, 149);
     border-radius: 5px;
     display: flex;
+    width: 95%;
     flex-direction: column;
 }
 
 .personaje-contenedor img {
+    height: 90%;
     width: 100%;
     justify-self: center;
 }
 
 .campo-personaje {
+    height: 10%;
     font-weight: bolder;
 }

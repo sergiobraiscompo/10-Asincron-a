@@ -31,7 +31,7 @@ const creaContenedorPersonaje = (personaje: Personaje): HTMLDivElement => {
     const Especialidad = crearElementoParrafo("Especialidad: ", personaje.especialidad);
     elementoPersonaje.appendChild(Especialidad);
 
-    const habilidades = crearElementoParrafo("Habilidades: ", personaje.habilidades);
+    const habilidades = crearElementoParrafo("Habilidades: ", personaje.habilidades.toString());
     elementoPersonaje.appendChild(habilidades);
     
     return elementoPersonaje;
