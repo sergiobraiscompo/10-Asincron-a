@@ -51,4 +51,18 @@ const pintarPersonajes = async (): Promise<void> => {
     }
 }
 
-document.addEventListener("DOMContentLoaded", pintarPersonajes);
+const filtraPersonajes = (criterio: string) => {
+    
+}
+
+
+const eventos = () => {
+    if (botonBuscar && botonBuscar != null && botonBuscar != undefined && criterioBusqueda && criterioBusqueda != undefined && criterioBusqueda != null) {
+        botonBuscar.addEventListener("click", () => filtraPersonajes(criterioBusqueda.value));
+    }
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+    pintarPersonajes; 
+    eventos;
+});
