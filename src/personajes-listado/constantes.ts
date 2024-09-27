@@ -1,2 +1,2 @@
-const botonBuscar = document.getElementById("boton-busqueda");
-const criterioBusqueda = document.getElementById("criterioBusqueda") as HTMLInputElement;
+export const botonBuscar = document.getElementById("botonBusqueda") as HTMLButtonElement;
+export const criterioBusqueda = document.getElementById("criterioBusqueda") as HTMLInputElement;

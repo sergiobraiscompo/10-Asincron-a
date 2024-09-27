@@ -1,7 +1,6 @@
 import { obtenerPersonajes } from "./personajes-listado-api";
 import { Personaje } from "./personajes-listado.model";
 
-
 const crearElementoImagen = (imagenPersonaje: string, nombre: string): HTMLImageElement => {
     const imagen = document.createElement("img");
     imagen.src = imagenPersonaje;
@@ -37,7 +36,7 @@ const creaContenedorPersonaje = (personaje: Personaje): HTMLDivElement => {
     return elementoPersonaje;
 }
 
-const pintarPersonajes = async (): Promise<void> => {
+export const pintarPersonajes = async (): Promise<void> => {
     const personajes = await obtenerPersonajes();
     const listado = document.querySelector("#listado-personajes");
 
@@ -51,18 +50,6 @@ const pintarPersonajes = async (): Promise<void> => {
     }
 }
 
-const filtraPersonajes = (criterio: string) => {
-    
+export const filtraPersonajes = (criterio: string) => {
+    console.log("Buscando a", criterio);
 }
-
-
-const eventos = () => {
-    if (botonBuscar && botonBuscar != null && botonBuscar != undefined && criterioBusqueda && criterioBusqueda != undefined && criterioBusqueda != null) {
-        botonBuscar.addEventListener("click", () => filtraPersonajes(criterioBusqueda.value));
-    }
-}
-
-document.addEventListener("DOMContentLoaded", () => {
-    pintarPersonajes; 
-    eventos;
-});
