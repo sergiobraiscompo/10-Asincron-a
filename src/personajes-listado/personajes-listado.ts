@@ -1,5 +1,6 @@
-import { obtenerPersonajes } from "./personajes-listado-api";
+import { obtenerPersonajes, pintarPersonajesBuscados } from "./personajes-listado-api";
 import { Personaje } from "./personajes-listado.model";
+import { eventos } from "./shell";
 
 const crearElementoImagen = (imagenPersonaje: string, nombre: string): HTMLImageElement => {
     const imagen = document.createElement("img");
@@ -18,38 +19,57 @@ const crearElementoParrafo = (elemento: string, texto: string): HTMLParagraphEle
 };
 
 const creaContenedorPersonaje = (personaje: Personaje): HTMLDivElement => {
-    const elementoPersonaje = document.createElement("div");
-    elementoPersonaje.className = "personaje-contenedor";
+    const listadoElement = document.querySelector("#listado-personajes");
+
+    const contenedorPersonaje = document.createElement("div");
+    contenedorPersonaje.className = "personaje-contenedor";
 
     const imagen = crearElementoImagen(personaje.imagen, personaje.nombre);
-    elementoPersonaje.appendChild(imagen);
+    contenedorPersonaje.appendChild(imagen);
 
     const nombre = crearElementoParrafo("Nombre: ", personaje.nombre);
-    elementoPersonaje.appendChild(nombre);
+    contenedorPersonaje.appendChild(nombre);
 
     const Especialidad = crearElementoParrafo("Especialidad: ", personaje.especialidad);
-    elementoPersonaje.appendChild(Especialidad);
+    contenedorPersonaje.appendChild(Especialidad);
 
     const habilidades = crearElementoParrafo("Habilidades: ", personaje.habilidades.toString());
-    elementoPersonaje.appendChild(habilidades);
-    
-    return elementoPersonaje;
-}
+    contenedorPersonaje.appendChild(habilidades);
 
-export const pintarPersonajes = async (): Promise<void> => {
-    const personajes = await obtenerPersonajes();
-    const listado = document.querySelector("#listado-personajes");
 
-    if (listado && listado instanceof HTMLDivElement) {
-        personajes.forEach((personaje) => {
-            const contenedorPersonaje = creaContenedorPersonaje(personaje);
-            listado.appendChild(contenedorPersonaje);
-        })
+    if (listadoElement && listadoElement != null && listadoElement != undefined) {
+        return listadoElement.appendChild(contenedorPersonaje);
     } else {
-        throw new Error("No se ha encontrado el contenedor del listado");
+        throw new Error(`Ha ocurrido un error al crear el contenedor del personaje.`)
     }
 }
 
-export const filtraPersonajes = (criterio: string) => {
-    console.log("Buscando a", criterio);
+export const pintarListadoInicialPersonajes = async (): Promise<void> => {
+    const personajes = await obtenerPersonajes();
+
+        personajes.forEach((personaje) => {
+            creaContenedorPersonaje(personaje);
+        })
 }
+export const filtraPersonajes = (criterio: string) => {
+    const personajesEncontrados = pintarPersonajesBuscados(criterio);
+    const listadoElement = document.querySelector("#listado-personajes");
+
+    // Crea los contenedores de los personajes encontrados
+    personajesEncontrados
+    .then((listaPersonajes) => {
+        listaPersonajes.map((personaje) => {
+            const contenedorPersonaje = creaContenedorPersonaje(personaje);
+
+            if (listadoElement && listadoElement != null && listadoElement != undefined) {
+                listadoElement.appendChild(contenedorPersonaje);
+            }
+        })
+    })
+    .catch(Error => console.log(`Error al mostrar los personajes buscados. \n ${Error}`));
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+    pintarListadoInicialPersonajes();
+    eventos();
+})

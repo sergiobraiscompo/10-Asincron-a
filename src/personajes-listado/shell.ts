@@ -1,16 +1,11 @@
 import { botonBuscar, criterioBusqueda } from "./constantes";
-import { filtraPersonajes, pintarPersonajes } from "./personajes-listado";
+import { filtraPersonajes } from "./personajes-listado";
 
-const eventos = () => {
+export const eventos = () => {
     if (
         botonBuscar && botonBuscar != null && botonBuscar != undefined && 
         criterioBusqueda && criterioBusqueda != undefined && criterioBusqueda != null
     ) {
-        botonBuscar.addEventListener("click", () => {filtraPersonajes(criterioBusqueda.value); console.log("Clicky")});
+        botonBuscar.addEventListener("click", () => filtraPersonajes(criterioBusqueda.value));
     }
 }
-
-document.addEventListener("DOMContentLoaded", () => {
-    pintarPersonajes();
-    eventos();
-});
