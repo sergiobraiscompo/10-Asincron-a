@@ -1,4 +1,4 @@
-import { obtenerPersonajes, pintarPersonajesBuscados } from "./personajes-listado-api";
+import { obtenerPersonajes, devuelvePersonajesEncontrados } from "./personajes-listado-api";
 import { Personaje } from "./personajes-listado.model";
 import { eventos } from "./shell";
 
@@ -51,23 +51,32 @@ export const pintarListadoInicialPersonajes = async (): Promise<void> => {
             creaContenedorPersonaje(personaje);
         })
 }
-export const filtraPersonajes = (criterio: string) => {
-    const personajesEncontrados = pintarPersonajesBuscados(criterio);
+
+
+const eliminaContenedoresPersonajes = () => {
     const listadoElement = document.querySelector("#listado-personajes");
 
-    // Crea los contenedores de los personajes encontrados
-    personajesEncontrados
-    .then((listaPersonajes) => {
-        listaPersonajes.map((personaje) => {
-            const contenedorPersonaje = creaContenedorPersonaje(personaje);
-
-            if (listadoElement && listadoElement != null && listadoElement != undefined) {
-                listadoElement.appendChild(contenedorPersonaje);
-            }
-        })
-    })
-    .catch(Error => console.log(`Error al mostrar los personajes buscados. \n ${Error}`));
+    if (listadoElement && listadoElement != null && listadoElement != undefined) {
+        listadoElement.replaceChildren()
+    }
 }
+
+export const filtraPersonajes = async (criterio: string) => {
+    const listadoElement = document.querySelector("#listado-personajes");
+    const personajesEncontrados = await devuelvePersonajesEncontrados(criterio);
+    eliminaContenedoresPersonajes();
+    
+    // Crea los contenedores de los personajes
+    for (const personaje of personajesEncontrados) {
+        const contenedorPersonaje = creaContenedorPersonaje(personaje);
+    
+        if (listadoElement && listadoElement != null && listadoElement != undefined) {
+            listadoElement.appendChild(contenedorPersonaje);
+        }
+    }
+}
+
+
 
 document.addEventListener("DOMContentLoaded", () => {
     pintarListadoInicialPersonajes();

@@ -1,6 +1,5 @@
 import Axios from "axios";
 import { Personaje } from "./personajes-listado.model";
-import axios from "axios";
 
 const database = "http://localhost:3000/personajes"
 
@@ -14,7 +13,24 @@ export const obtenerPersonajes = async () : Promise<Personaje[]> => {
     }
 }
 
-export const pintarPersonajesBuscados = async (criterio: string): Promise<Personaje[]> => {
-    const personajesBuscados: Personaje[] = await axios.get(`${database}?nombre_like=${criterio}`);
-    return personajesBuscados;
+// Obtén la promesa de la API más rápida
+export const devuelvePersonajesEncontrados = async (criterio: String): Promise<Personaje[]> => {
+    const arrayPersonajes: Personaje[] = [];
+    
+    const personajesEncontradosPromesa = new Promise((resolve, reject) => {
+        Axios.get(`${database}?nombre_like=${criterio}`)
+        .then((response) => {
+            resolve({
+                ...response.data.map((datosPersonaje: Personaje) => {
+                    arrayPersonajes.push(datosPersonaje);
+                })
+            });
+    
+            reject
+        })
+        .catch(reject => console.log(`Error al mostrar los personajes buscados. \n ${reject}`));        
+    })
+    
+    await personajesEncontradosPromesa;
+    return arrayPersonajes;
 }
