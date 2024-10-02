@@ -26,6 +26,7 @@ const creaContenedorPersonaje = (personaje: Personaje): HTMLDivElement => {
 
     const imagen = crearElementoImagen(personaje.imagen, personaje.nombre);
     contenedorPersonaje.appendChild(imagen);
+    console.log(imagen)
 
     const nombre = crearElementoParrafo("Nombre: ", personaje.nombre);
     contenedorPersonaje.appendChild(nombre);
